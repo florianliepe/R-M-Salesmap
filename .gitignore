@@ -1,0 +1,9 @@
+*.xlsx
+*.xls
+*.csv
+*.tsv
+*geocode-cache*.json
+*_updated_*.xlsx
+node_modules/
+.DS_Store
+Thumbs.db
