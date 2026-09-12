@@ -6,7 +6,7 @@
 
 Die App läuft lokal, nutzt aber bewusst Online-Karten und optional Online-Geocoding. Laufzeit-CDNs sind `cdnjs.cloudflare.com` für Leaflet und JSZip, plus OpenStreetMap-Kacheln für den Kartenhintergrund. Beim aktiv gestarteten Geocoding wird nur die postalische Adresse an den gewählten Provider gesendet; Status, Segment, Accountinhaber und interne IDs werden nicht übertragen.
 
-Die Karte nutzt OpenStreetMap-Kacheln und lokal eingebettete Bundesländergrenzen. Fahnen bleiben bei jedem Zoom sichtbar und skalieren nur in der Größe. Der Leaflet-Marker hat einen festen 60x60-Pixel-Container mit konstantem Ankerpunkt am Mastfuß; nur die innere Fahne wird per CSS skaliert. Dadurch bleibt der geografische Punkt beim Zoomen stabil. Die Fahnenfarben werden aus der Statusfarblegende der hochgeladenen Excel gelesen. Standorte werden zuerst aus einem lokalen Geocode-Cache geladen, dann per Google Geocoding oder OpenStreetMap/Nominatim präzisiert und nur als sichtbar markierter Fallback aus PLZ, Straße und Stadt angenähert.
+Die Karte nutzt OpenStreetMap-Kacheln und lokal eingebettete Bundesländergrenzen. Fahnen bleiben bei jedem Zoom sichtbar und skalieren nur in der Größe. Der Leaflet-Marker hat einen festen 60x60-Pixel-Container mit konstantem Ankerpunkt am Mastfuß; nur die innere Fahne wird per CSS skaliert. Dadurch bleibt der geografische Punkt beim Zoomen stabil. Die Fahnenfarben werden aus der Statusfarblegende der hochgeladenen Excel gelesen. Standorte werden zuerst aus einem lokalen Geocode-Cache geladen, dann standardmäßig per OpenStreetMap/Nominatim oder optional per Google Geocoding präzisiert und nur als sichtbar markierter Fallback aus PLZ, Straße und Stadt angenähert.
 
 Das Suchfeld durchsucht alle Accountparameter. `Schlagwort` nutzt Teiltreffer und exakte PLZ-/Textsuche; `Vektor` nutzt eine lokale Token-/N-Gramm-Vektorsuche mit Kosinus-Ähnlichkeit. Treffer erscheinen als Standortliste und können direkt auf der Karte angesprungen werden.
 
@@ -54,7 +54,7 @@ Playwright ist in dieser Umgebung nicht installiert. Deshalb liegt die Round-Tri
 9. Marker `Alpha Fiber GmbH` anklicken, Status auf rot ändern.
 10. Change Log zeigt einen nicht exportierten Eintrag; Rückgängig funktioniert.
 11. Status erneut ändern und `Aktualisierte Excel herunterladen` klicken.
-12. Optional unter `Standorte` einen Google-API-Key setzen oder OpenStreetMap/Nominatim wählen, `Standorte präzisieren` starten und prüfen, dass die Genauigkeit auf `Adresse online`, `Straße online` oder `PLZ/Ort online` wechselt.
+12. Optional unter `Standorte` OpenStreetMap/Nominatim ohne Account nutzen oder für Google einen eigenen API-Key setzen, `Standorte präzisieren` starten und prüfen, dass die Genauigkeit auf `Adresse online`, `Straße online` oder `PLZ/Ort online` wechselt.
 13. Geocode-Cache exportieren, Seite neu öffnen, Cache importieren und prüfen, dass präzise Koordinaten wiederverwendet werden.
 14. Export mit `tests/validate_export.py` prüfen.
 
@@ -71,4 +71,4 @@ Playwright ist in dieser Umgebung nicht installiert. Deshalb liegt die Round-Tri
 
 ## Empfohlene Geocoding-Zielumsetzung
 
-Die Zielumsetzung nutzt Google Geocoding als primäre Option und OpenStreetMap/Nominatim als kleine, bewusst gedrosselte Alternative. Ergebnisse werden im lokalen Geocode-Cache gespeichert und können als JSON exportiert/importiert werden. Details stehen in `GEO_TARGET_ARCHITECTURE.md`.
+Die Zielumsetzung nutzt OpenStreetMap/Nominatim als accountfreien Default und Google Geocoding als optionale präzisere Providerwahl mit eigenem API-Key. Ergebnisse werden im lokalen Geocode-Cache gespeichert und können als JSON exportiert/importiert werden. Details stehen in `GEO_TARGET_ARCHITECTURE.md`.

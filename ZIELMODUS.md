@@ -8,8 +8,8 @@ Die Anwendung laeuft als statische lokale Webapp und als GitHub-Pages-App. Nutze
 
 1. Die Excel enthaelt keine GPS-Spalten als Quelle.
 2. Fuehrender Bezugspunkt ist die postalische Adresse aus `Strasse (Hausadresse)`, `PLZ (Hausadresse)` und `Stadt (Hausadresse)`.
-3. Primaere Online-Aufloesung ist Google Geocoding ueber einen lokal im UI eingegebenen Google Maps JavaScript API Key.
-4. OpenStreetMap/Nominatim bleibt als bewusst gestartete, rate-limitierte Alternative verfuegbar.
+3. Primaere accountfreie Online-Aufloesung ist OpenStreetMap/Nominatim als bewusst gestarteter, rate-limitierter Lauf.
+4. Google Geocoding bleibt als optionale Providerwahl verfuegbar, wenn ein Nutzer einen eigenen Google Maps JavaScript API Key besitzt.
 5. Geocoding-Ergebnisse werden in einem lokalen JSON-Cache gespeichert und koennen importiert/exportiert werden.
 6. Wenn kein Cache oder Online-Treffer vorhanden ist, nutzt die App nur einen sichtbar markierten Leitregion-Fallback. Dieser Fallback gilt nicht als korrekter Standort.
 
@@ -23,6 +23,7 @@ Der Excel-Export bewahrt die bestehende Workbook-Struktur und Statusfarben und e
 
 - `GPS Latitude`
 - `GPS Longitude`
+- `GPS Coordinates`
 - `Geocode Precision`
 - `Geocode Source`
 - `Geocode Address`

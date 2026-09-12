@@ -38,8 +38,8 @@ Online-Komponenten duerfen Kartenkacheln liefern. Fuer die Ermittlung genauer St
 
 Eindeutiger Zielmodus:
 
-1. Primaer Google Geocoding API mit API-Key.
-2. Alternative OSM/Nominatim nur fuer kleine, bewusst gestartete Laeufe und mit Rate Limit.
+1. Primaer OpenStreetMap/Nominatim ohne Nutzerkonto, aber nur fuer bewusst gestartete, rate-limitierte Laeufe.
+2. Optional Google Geocoding API mit eigenem API-Key fuer Nutzer mit Google-Cloud-Zugang.
 3. Lokaler Cache ist Pflicht.
 4. Fallbacks bleiben sichtbar markiert.
 
