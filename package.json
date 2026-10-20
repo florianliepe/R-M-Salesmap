@@ -1,0 +1,24 @@
+{
+  "name": "r-m-salesmap",
+  "version": "1.0.0",
+  "description": "Browser-based Excel sales map; Node dependencies are for regression tests only.",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/regression.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florianliepe/R-M-Salesmap.git"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/florianliepe/R-M-Salesmap/issues"
+  },
+  "homepage": "https://github.com/florianliepe/R-M-Salesmap#readme",
+  "devDependencies": {
+    "jsdom": "^30.1.3",
+    "jszip": "^3.10.2"
+  }
+}
