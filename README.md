@@ -2,7 +2,7 @@
 
 ## Nutzung
 
-`rm-plz-karte.html` per Doppelklick in Chrome, Edge oder Firefox öffnen. Die App läuft vollständig im Browser im `file://`-Kontext; es gibt keinen Server, kein Java/JDK, kein npm und keine Installation.
+`index.html` per Doppelklick in Chrome, Edge oder Firefox öffnen. Die App läuft vollständig im Browser im `file://`-Kontext; es gibt keinen Server, kein Java/JDK, kein npm und keine Installation.
 
 Die App läuft lokal, nutzt aber bewusst Online-Karten und optional Online-Geocoding. Laufzeit-CDNs sind `cdnjs.cloudflare.com` für Leaflet und JSZip, plus OpenStreetMap-Kacheln für den Kartenhintergrund. Beim aktiv gestarteten Geocoding wird nur die postalische Adresse an den gewählten Provider gesendet; Status, Segment, Accountinhaber und interne IDs werden nicht übertragen.
 
@@ -16,10 +16,8 @@ Die Suche gruppiert Treffer nach Accounts, PLZ, Städten, Segmenten und Accounti
 
 ## Dateien
 
-- `rm-plz-karte.html`: komplette Single-File-App mit inline HTML/CSS/JavaScript.
-- `test-accounts.xlsx`: synthetische Testdatei mit allen Statusfarben, Theme-Farben, führender Null, ungültiger und fehlender PLZ.
-- `tests/generate_test_accounts.py`: erzeugt die Testdatei erneut.
-- `tests/validate_export.py`: prüft eine exportierte Datei gegen erwartete Werte/Farben.
+- `index.html`: komplette Single-File-App mit inline HTML/CSS/JavaScript.
+- `tests/regression.cjs`: automatisierte Regressionstests mit synthetischer Demo und optionaler lokaler Excel-Datei.
 - `FEATURE_ROADMAP.md`: priorisierte Feature-Roadmap inklusive Dashboard-View für Vertriebs-KPIs und Insights.
 - `GEO_TARGET_ARCHITECTURE.md`: Zielarchitektur für lokale präzise Kartierung, Geocode-Cache, Qualitätsstufen und zoomabhängiges Flagging.
 
@@ -27,36 +25,13 @@ Die eingebetteten Bundesländergrenzen basieren auf `isellsoap/deutschlandGeoJSO
 
 ## Tests
 
-Testdatei erzeugen:
+Regressionstests: `npm ci` und `npm test`. Browser-Schritte, Originaldatei-Vergleich und verbleibende Grenzen stehen in [TESTING.md](TESTING.md). Die Node-Abhängigkeiten werden nur für Tests benötigt.
 
-```powershell
-python tests/generate_test_accounts.py
-```
+## Export und Mehrfachauswahl
 
-Export validieren, nachdem in der App bei `Alpha Fiber GmbH` der Status auf `eingeschlafen / keinen Kontakt` gesetzt und heruntergeladen wurde:
+Der Standardexport erhält die Excel-Struktur und ändert nur bewusst bearbeitete Statusfarben. Bekannte XML-Namensraumfehler älterer Exporte werden repariert. GPS-Spalten werden nur bei aktivierter Option ergänzt/aktualisiert; Kartenpositionen lassen sich unabhängig davon als JSON-Cache sichern.
 
-```powershell
-python tests/validate_export.py test-accounts.xlsx test-accounts_updated_YYYYMMDD-HHMM.xlsx
-```
-
-Playwright ist in dieser Umgebung nicht installiert. Deshalb liegt die Round-Trip-Validierung als Python-Skript plus manuelle Smoke-Checkliste vor.
-
-## Manuelle Smoke-Checkliste
-
-1. `rm-plz-karte.html` per Doppelklick öffnen.
-2. `test-accounts.xlsx` hochladen oder Demo-Modus starten.
-3. Prüfen: Marker erscheinen, Legende zeigt sechs Status inklusive `kein Status gesetzt`.
-4. Suche per PLZ, Standort, Accountname oder Segment testen; Treffer anklicken und Kartenzoom prüfen.
-5. Filter für Status, Segment, Accountinhaber, Partnerstatus und Standortgenauigkeit setzen; Trefferzahlen und Verblassen/Ausblenden prüfen.
-6. In `Dashboard` wechseln; KPI-Kacheln, Status-Mix, Radar Chart, Potenzialkarte, Pipeline, Matrix, Datenqualität und Insights werden angezeigt.
-7. Radar-Accountinhaber wechseln und prüfen, dass sich das Profil aktualisiert.
-8. Eine KPI-Kachel oder ein Segment im Potenzialranking anklicken und prüfen, dass Filter/Chips aktualisiert werden.
-9. Marker `Alpha Fiber GmbH` anklicken, Status auf rot ändern.
-10. Change Log zeigt einen nicht exportierten Eintrag; Rückgängig funktioniert.
-11. Status erneut ändern und `Aktualisierte Excel herunterladen` klicken.
-12. Optional unter `Standorte` OpenStreetMap/Nominatim ohne Account nutzen oder für Google einen eigenen API-Key setzen, `Standorte präzisieren` starten und prüfen, dass die Genauigkeit auf `Adresse online`, `Straße online` oder `PLZ/Ort online` wechselt.
-13. Geocode-Cache exportieren, Seite neu öffnen, Cache importieren und prüfen, dass präzise Koordinaten wiederverwendet werden.
-14. Export mit `tests/validate_export.py` prüfen.
+Filter bieten Checkboxen mit `Alle` und `Keine`. Keine Auswahl bedeutet null Treffer. Innerhalb eines Filters gilt ODER, zwischen Filtern und Suche UND. Nicht passende Marker sind standardmäßig vollständig ausgeblendet.
 
 ## Bekannte Einschränkungen
 
